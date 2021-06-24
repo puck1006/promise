@@ -9,20 +9,15 @@
 
   <body>
     <script>
-      var p1 = new Promise((resolve, reject) => {
+      var promise = new Promise((resolve, reject) => {
         setTimeout(() => {
-          reject("解决");
+          resolve("解决");
         }, 1000);
-      }).then(
-        (res) => {
-          console.log("resolove", res);
-          return "成功";
-        },
-        (reason) => {
-          console.log("rejected", reason);
-          return "失败";
-        }
-      );
+      });
+
+      let p = promise.then((res) => {
+        return 123;
+      });
     </script>
   </body>
 </html>

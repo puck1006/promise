@@ -11,22 +11,28 @@
   <body>
     <h1>手写promise</h1>
     <script>
-      var p1 = new mypromise((resolve, reject) => {
-        // setTimeout(() => {
-        //   reject("错误");
-        // }, 1000);
-        resolve("foo success");
-      })
-        .then()
-        .then(
-          (res) => {
-            console.log("resolove", res);
-          },
-          (reason) => {
-            console.log("rejected", reason);
-            return 123;
-          }
-        );
+      var promise = new mypromise((resolve, reject) => {
+        reject("解决");
+      });
+
+      let p = promise.then(
+        (res) => {
+          return 123;
+        },
+        (reason) => {
+          return new mypromise((_, reject) => {
+            reject("rejecthahah");
+          });
+        }
+      );
+      p.then(
+        (res) => {
+          console.log(res);
+        },
+        (reason) => {
+          console.log(reason);
+        }
+      );
     </script>
   </body>
 </html>
