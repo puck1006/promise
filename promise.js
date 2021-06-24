@@ -86,4 +86,53 @@ class mypromise {
       reject(error);
     }
   }
+
+  static resolve(value) {
+    return new mypromise((resolve, reject) => {
+      if (value instanceof mypromise) {
+        value.then(resolve, reject);
+      } else {
+        resolve(value);
+      }
+    });
+  }
+  static reject(value) {
+    return new mypromise((_, reject) => {
+      reject(value);
+    });
+  }
+
+  static all(promises) {
+    return new mypromise((resolve, reject) => {
+      var values = [];
+      promises.map((promise) => {
+        promise.then(
+          (res) => {
+            values.push(res);
+            if (promises.length == values.length) {
+              resolve(values);
+            }
+          },
+          (reason) => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  }
+
+  static race(promises) {
+    return new mypromise((resolve, reject) => {
+      promises.map((promise) => {
+        promise.then(
+          (res) => {
+            resolve(res);
+          },
+          (reason) => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  }
 }

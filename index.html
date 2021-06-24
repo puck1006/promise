@@ -9,28 +9,23 @@
   </head>
 
   <body>
-    <h1>手写promise</h1>
     <script>
-      var promise = new mypromise((resolve, reject) => {
-        reject("解决");
+      var p1 = new mypromise((resolve, reject) => {
+        resolve("spicycurry");
+      });
+      var p2 = new mypromise((resolve, reject) => {
+        resolve("deny");
+      });
+      var p3 = new mypromise((resolve, reject) => {
+        resolve("success");
       });
 
-      let p = promise.then(
+      mypromise.all([p1, p2, p3]).then(
         (res) => {
-          return 123;
+          console.log("res", res);
         },
         (reason) => {
-          return new mypromise((_, reject) => {
-            reject("rejecthahah");
-          });
-        }
-      );
-      p.then(
-        (res) => {
-          console.log(res);
-        },
-        (reason) => {
-          console.log(reason);
+          console.log("reason", reason);
         }
       );
     </script>
